@@ -13,7 +13,7 @@ export default function CreateSForm(){
                     create an event page
             </button>
             <br></br>
-            <textarea type="text" name="form_title" placeholder="Form title" className="text-4xl text-white placeholder-text-gray-400 font-bold m-7 h-32 resize-none focus:outline-none overflow-y-hidden ">
+            <textarea type="text" name="form_title" placeholder="Form title" className="text-4xl text-white placeholder-text-gray-400 font-bold m-7 h-32 focus:outline-none overflow-y-hidden ">
             </textarea>
 
             <button
