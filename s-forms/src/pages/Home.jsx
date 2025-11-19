@@ -12,7 +12,7 @@ export default function Home() {
         </h1>
 
         <button
-          onClick={() => navigate("/create-snippet-forms")}
+          onClick={() => navigate("/snippet-forms")}
           className="bg-white text-black w-full py-4 rounded-2xl font-medium hover:bg-gray-200 transition"
         >
           Create Snippet Forms

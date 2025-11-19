@@ -1,6 +1,7 @@
 import {BrowserRouter,Routes,Route,Link} from "react-router-dom";
 import Home from "./pages/Home"
-import CreateSForm from "./pages/CreateSForms"
+import SForm from "./pages/SForms"
+import CreateSForms from "./pages/CreateSForms"
 import './App.css'
 
 export default function App() {
@@ -10,7 +11,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>} />
-         <Route path="/create-snippet-forms" element={<CreateSForm/>} />
+        <Route path="/snippet-forms" element={<SForm/>} />
+        <Route path="/create-snippet-forms" element={<CreateSForms/>} />
       </Routes>
     </BrowserRouter>
   </>
