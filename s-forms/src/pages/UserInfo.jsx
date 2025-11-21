@@ -1,7 +1,4 @@
-import { useNavigate } from "react-router-dom"
-import Header_PreviewPublish from "../components/Header_PreviewPublish"
-export default function CreateSForm(){
-    const navigate = useNavigate();
+export default function UserInfo(){
     return(
         <>
         <section className="bg-black min-h-screen w-full overflow-x-hidden">
@@ -20,7 +17,7 @@ export default function CreateSForm(){
                 Submit
             </button>
             <img src="src/assets/Snippy_peeking.png" alt="snippy_peeking" className="ml-4 mt-10 h-40 md:h-60 w-auto "/>
-
+        
         </section>
         </>
     )
