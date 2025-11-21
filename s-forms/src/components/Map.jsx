@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix default Leaflet marker icons
+// Fix Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -14,7 +14,6 @@ L.Icon.Default.mergeOptions({
 function MapEvents({ onLocationChange }) {
   const map = useMap();
 
-  // Run when the map finishes moving (drag, zoom, pinch)
   useEffect(() => {
     const updatePosition = () => {
       const center = map.getCenter();
@@ -25,11 +24,9 @@ function MapEvents({ onLocationChange }) {
     };
 
     map.on("moveend", updatePosition);
-    updatePosition(); // initial
+    updatePosition(); // initial run
 
-    return () => {
-      map.off("moveend", updatePosition);
-    };
+    return () => map.off("moveend", updatePosition);
   }, [map]);
 
   return null;
@@ -37,32 +34,24 @@ function MapEvents({ onLocationChange }) {
 
 export default function MyMap({ onLocationChange }) {
   return (
-    <div style={{ position: "relative", height: "50vh", width: "100%" }}>
+    <div className="relative h-[50vh] w-full">
       {/* Center Pin */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -100%)",
-          zIndex: 999,
-          pointerEvents: "none"
-        }}
-      >
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
         <img
           src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png"
           alt="center-pin"
+          className="w-8 h-8"
         />
       </div>
 
       <MapContainer
-        center={[11.603863095371374, 79.49707031250001]}
+        center={[51.505, -0.09]}
         zoom={13}
-        style={{ height: "100%", width: "100%" }}
+        className="h-full w-full"
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; OpenStreetMap contributors'
+          attribution="&copy; OpenStreetMap contributors"
         />
 
         <MapEvents onLocationChange={onLocationChange} />
