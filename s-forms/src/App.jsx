@@ -5,7 +5,8 @@ import Home from "./pages/Home"
 import SForm from "./pages/SForms"
 import CreateSForms from "./pages/CreateSForms"
 import GoogleSignIn from "./pages/GoogleSignIn"
-import UserInfo from "./pages/UserInfo"
+import PublishSforms from "./pages/PublishSForms"
+import SFormsDone from "./pages/SFormsDone"
 
 import './App.css'
 
@@ -19,7 +20,8 @@ export default function App() {
         <Route path="/snippet-forms" element={<SForm/>} />
         <Route path="/create-snippet-forms" element={<CreateSForms/>} />
         <Route path="/google-sign-in" element={<GoogleSignIn/>} />
-        <Route path="/user-info" element={<UserInfo/>} />
+        <Route path="/publish-sforms" element={<PublishSforms/>} />
+        <Route path="/sforms-created" element={<SFormsDone/>} />
       </Routes>
     </BrowserRouter>
   </>

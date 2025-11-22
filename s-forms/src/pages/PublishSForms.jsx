@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Header_PreviewPublish from "../components/Header_PreviewPublish";
+import Header_Publish from "../components/Header_Publish";
 
-export default function CreateSForms() {
+export default function CreateSForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Retrieve stored form data from localStorage
         const storedFormData = sessionStorage.getItem("form_data");
+        
         if (storedFormData) {
             const formData = JSON.parse(storedFormData);
             // Populate the form fields with the stored data
@@ -15,37 +15,33 @@ export default function CreateSForms() {
             document.querySelector('textarea[name="form_question"]').value = formData.form_question || '';
             document.querySelector('input[name="form_answer"]').value = formData.form_answer || '';
         }
-    }, []); // This effect runs once when the component mounts
+    }, []);
 
     const handleFormSubmit = () => {
-        // Get form values
+
         const formTitle = document.querySelector('textarea[name="form_title"]').value;
         const formQuestion = document.querySelector('textarea[name="form_question"]').value;
         const formAnswer = document.querySelector('input[name="form_answer"]').value;
 
-        // Create a JSON object with the form data
         const formData = {
             form_title: formTitle,
             form_question: formQuestion,
-            form_answer: formAnswer,
+            form_answer: formAnswer
         };
 
-        // Store the JSON object as a string in localStorage
-        sessionStorage.setItem("form_data", JSON.stringify(formData));
+        sessionStorage.setItem('form_data', JSON.stringify(formData));
 
-        // Navigate to another page after saving
-        navigate("/google-sign-in");
+        navigate("/sforms-created");
     };
 
     return (
         <>
             <section className="bg-black min-h-screen w-full overflow-x-hidden">
                 <br />
-                <Header_PreviewPublish />
+                <Header_Publish />
                 <button
                     onClick={() => navigate("/create-event-page")}
-                    className="border-2 border-gray-800 text-1rem hover:bg-gray-900 text-gray-500 rounded-lg py-1 px-5 m-5"
-                >
+                    className="border-2 border-gray-800 text-1rem hover:bg-gray-900 text-gray-500 rounded-lg py-1 px-5 m-5">
                     create an event page
                 </button>
                 <br />
@@ -55,32 +51,27 @@ export default function CreateSForms() {
                     placeholder="Form title"
                     className="text-4xl text-white placeholder-gray-400 font-bold m-7 h-12 resize-none focus:outline-none overflow-y-auto scrollbar-none"
                 />
-                <br />
+                <br/>
                 <textarea
                     type="text"
                     name="form_question"
                     placeholder="Form question"
                     className="text-2xl text-white placeholder-gray-400 font-bold m-7 h-24 resize-none focus:outline-none overflow-y-auto scrollbar-none"
                 />
-                <br />
+                <br/>
                 <input
                     type="text"
                     name="form_answer"
                     placeholder="Form answer"
-                    className="text-2xl text-white placeholder-gray-400 font-bold m-7 p-4 h-12 resize-none border-2 border-gray-700 rounded-2xl"
+                    className="text-2xl text-white placeholder-gray-400 font-bold m-7 p-4 h-24 resize-none border-2 border-gray-700 rounded-2xl"
                 />
                 <button
                     onClick={handleFormSubmit} // Trigger form submit on button click
                     name="form-submit"
-                    className="bg-white hover:bg-gray-200 text-black text-1rem font-medium py-1 px-6 ml-7 block rounded-lg"
-                >
+                    className="bg-white hover:bg-gray-200 text-black text-1rem font-medium py-1 px-6 ml-7 block rounded-lg">
                     Submit
                 </button>
-                <img
-                    src="src/assets/Snippy_peeking.png"
-                    alt="snippy_peeking"
-                    className="ml-4 mt-10 h-40 md:h-60 w-auto"
-                />
+                <img src="src/assets/Snippy_peeking.png" alt="snippy_peeking" className="m-1 mt-10 h-40 md:h-60 w-auto" />
             </section>
         </>
     );

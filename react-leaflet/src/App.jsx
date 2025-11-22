@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix default Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -11,21 +10,19 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// A component to handle map events and pass data back to App.jsx
 function MapEvents({ onLocationChange, coords }) {
   const map = useMap();
 
   useEffect(() => {
     const updatePosition = () => {
       const center = map.getCenter();
-      // Only update if the center has changed
       if (center.lat !== coords.lat || center.lng !== coords.lng) {
         onLocationChange({ lat: center.lat, lng: center.lng });
       }
     };
 
     map.on("moveend", updatePosition);
-    updatePosition(); // Set initial position
+    updatePosition();
 
     return () => {
       map.off("moveend", updatePosition);
@@ -41,7 +38,7 @@ export default function App() {
   const [savedLocations, setSavedLocations] = useState([]);
 
   const handleLocationChange = (pos) => {
-    setCoords(pos);  // Update the map's center when moved
+    setCoords(pos); 
   };
 
   const handleSaveLocation = () => {
@@ -52,7 +49,7 @@ export default function App() {
         lng: coords.lng,
       };
       setSavedLocations([...savedLocations, newLocation]);
-      setLocationName(""); // Clear input after saving
+      setLocationName(""); 
     } else {
       alert("Please select a location on the map and provide a name.");
     }
@@ -71,10 +68,8 @@ export default function App() {
             attribution='&copy; OpenStreetMap contributors'
           />
 
-          {/* Add MapEvents component to listen for moveend and update location */}
           <MapEvents onLocationChange={handleLocationChange} coords={coords} />
 
-          {/* Add markers for saved locations */}
           {savedLocations.map((location, index) => (
             <Marker key={index} position={[location.lat, location.lng]}>
               <Popup>{location.name}</Popup>
@@ -82,7 +77,6 @@ export default function App() {
           ))}
         </MapContainer>
 
-        {/* Center Pin */}
         <div
           style={{
             position: "absolute",
@@ -100,7 +94,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Location Input and Save Button */}
       <div style={{ padding: 20 }}>
         <h3>Selected Location</h3>
         <p>Lat: {coords.lat}</p>
