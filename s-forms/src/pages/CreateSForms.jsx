@@ -1,39 +1,54 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header_PreviewPublish from "../components/Header_PreviewPublish";
 
 export default function CreateSForms() {
     const navigate = useNavigate();
 
+    const [formTitle, setFormTitle] = useState("");
+    const [formQuestion, setFormQuestion] = useState("");
+    const [formAnswer, setFormAnswer] = useState("");
+
     useEffect(() => {
-        // Retrieve stored form data from localStorage
-        const storedFormData = sessionStorage.getItem("form_data");
-        if (storedFormData) {
-            const formData = JSON.parse(storedFormData);
-            // Populate the form fields with the stored data
-            document.querySelector('textarea[name="form_title"]').value = formData.form_title || '';
-            document.querySelector('textarea[name="form_question"]').value = formData.form_question || '';
-            document.querySelector('input[name="form_answer"]').value = formData.form_answer || '';
+        const storedDraft = sessionStorage.getItem("draft_form");
+        if (storedDraft) {
+            const draft = JSON.parse(storedDraft);
+            setFormTitle(draft.form_title || "");
+            setFormQuestion(draft.form_question || "");
+            setFormAnswer(draft.form_answer || "");
         }
-    }, []); // This effect runs once when the component mounts
+    }, []);
 
     const handleFormSubmit = () => {
-        // Get form values
+
         const formTitle = document.querySelector('textarea[name="form_title"]').value;
         const formQuestion = document.querySelector('textarea[name="form_question"]').value;
         const formAnswer = document.querySelector('input[name="form_answer"]').value;
 
-        // Create a JSON object with the form data
-        const formData = {
+
+        const newForm = {
+            id: Date.now(),
             form_title: formTitle,
             form_question: formQuestion,
             form_answer: formAnswer,
+            created_at: new Date().toLocaleString(),
+            before_signin: true,
         };
+        const existingForms = JSON.parse(sessionStorage.getItem("form_list")) || [];
 
-        // Store the JSON object as a string in localStorage
-        sessionStorage.setItem("form_data", JSON.stringify(formData));
+        existingForms.push(newForm);
 
-        // Navigate to another page after saving
+        sessionStorage.setItem("form_list", JSON.stringify(existingForms));
+
+        sessionStorage.setItem(
+            "draft_form",
+            JSON.stringify({
+                form_title: formTitle,
+                form_question: formQuestion,
+                form_answer: formAnswer,
+            })
+        );
+
         navigate("/google-sign-in");
     };
 
@@ -70,9 +85,9 @@ export default function CreateSForms() {
                     className="text-2xl text-white placeholder-gray-400 font-bold m-7 p-4 h-12 resize-none border-2 border-gray-700 rounded-2xl"
                 />
                 <button
-                    onClick={handleFormSubmit} // Trigger form submit on button click
                     name="form-submit"
                     className="bg-white hover:bg-gray-200 text-black text-1rem font-medium py-1 px-6 ml-7 block rounded-lg"
+                    onClick = {handleFormSubmit}
                 >
                     Submit
                 </button>

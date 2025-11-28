@@ -10,18 +10,16 @@ export default function GoogleSignIn() {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
-            console.log('User UID:', user.uid); // Debugging log
-            console.log('Full User Object:', user); // Debugging log
+            console.log('User UID:', user.uid);
+            console.log('Full User Object:', user); 
 
-            // Store the user's photoURL in localStorage
             if (user.photoURL) {
                 localStorage.setItem("user_photoURL", user.photoURL);
             } else {
                 console.warn("User photoURL is not available");
             }
 
-            // Navigate to the publish page after login
-            navigate("/publish-sforms");
+            navigate("/sforms-create");
         } catch (error) {
             console.error("Error during Google Sign-In: ", error); // Log error
             alert("An error occurred during Google Sign-In. Please try again.");
@@ -31,7 +29,6 @@ export default function GoogleSignIn() {
     useEffect(() => {
         const currentUser = auth.currentUser;
         if (currentUser && currentUser.photoURL) {
-            // Store the user's photoURL in localStorage
             localStorage.setItem("user_photoURL", currentUser.photoURL);
         } else {
             console.warn("User photoURL is not available");
