@@ -4,6 +4,8 @@ import Header_Publish from "../components/Header_Publish";
 
 export default function CreateSForm() {
     const navigate = useNavigate();
+    const username = localStorage.getItem("user_name");
+
 
     useEffect(() => {
         const storedFormData = sessionStorage.getItem("form_data");
@@ -17,21 +19,47 @@ export default function CreateSForm() {
         }
     }, []);
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = async () => {
 
         const formTitle = document.querySelector('textarea[name="form_title"]').value;
         const formQuestion = document.querySelector('textarea[name="form_question"]').value;
         const formAnswer = document.querySelector('input[name="form_answer"]').value;
 
-        const formData = {
-            form_title: formTitle,
-            form_question: formQuestion,
-            form_answer: formAnswer
-        };
+    const formData = {
+        form_title: formTitle,
+        form_question: formQuestion,
+        form_answer: formAnswer
+    };
+        
+    const payload = {
+        created_by: username,
+        form_name: formTitle,
+        questions: [
+            {
+                id: "q1",
+                type: "text",
+                label: formQuestion,
+                required: true
+            }
+        ],
+        status: "draft"
+    };
+        const response = await fetch("http://localhost:8000/forms", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
 
-        sessionStorage.setItem('form_data', JSON.stringify(formData));
+        sessionStorage.setItem('form_data', JSON.stringify(formData));        
 
-        navigate("/sforms-created");
+        const data = await response.json();
+
+        console.log("Form Created:", data);
+
+
+        navigate("/sforms-created", { state: { form_slug: data.form_slug } });
     };
 
     return (

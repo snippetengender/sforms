@@ -1,6 +1,16 @@
 import Header from "../components/Header";
 
+import { useLocation } from "react-router-dom";
+
+
 export default function SFormsDone(){
+
+    const location = useLocation();
+    const formSlug = location.state?.form_slug;
+
+    // The link:
+    const formLink = `http://localhost:5173/forms/${formSlug}`;
+    
     return(
         <div className="bg-black min-h-screen w-full overflow-x-hidden">
         <br/>
@@ -8,7 +18,11 @@ export default function SFormsDone(){
         <br/>
         <div className="flex flex-col justify-center items-center">
             <h1 className="text-white text-2xl my-10 font-bold text">Sforms created Successfully</h1>
-            <button className="bg-blue-400 px-4 py-2 rounded-2xl font-semibold text-white">copy from link here</button>
+            <button onClick={() => {
+        navigator.clipboard.writeText(formLink);
+        alert("Link copied to clipboard!");
+    }}
+    className="bg-blue-400 px-4 py-2 rounded-2xl font-semibold text-white">copy the link here</button>
         </div>
         
         <section className="text-left">

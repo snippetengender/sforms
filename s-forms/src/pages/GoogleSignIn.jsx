@@ -13,6 +13,18 @@ export default function GoogleSignIn() {
             console.log('User UID:', user.uid); // Debugging log
             console.log('Full User Object:', user); // Debugging log
 
+            const idToken = await user.getIdToken();
+
+            await fetch("http://localhost:8000/forms/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id_token: idToken }),
+            });
+            if (user.displayName) {
+                localStorage.setItem("user_name", user.displayName);
+            }
             // Store the user's photoURL in localStorage
             if (user.photoURL) {
                 localStorage.setItem("user_photoURL", user.photoURL);
