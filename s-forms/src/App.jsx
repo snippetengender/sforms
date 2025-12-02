@@ -9,6 +9,8 @@ import SFormsDone   from "./pages/SFormsDone"
 import SFormsHome   from "./pages/SFormsHome"
 import SFormView    from "./pages/SFormView";
 
+// import PublishSforms from "./pages/PublishSForms"
+import FormPublicView from "./pages/FormPublicView"
 
 import './App.css'
 
@@ -25,7 +27,12 @@ export default function App() {
         <Route path="/sforms-create"        element={<CreateSForm/>} />
         <Route path="/sforms-created"       element={<SFormsDone/>} />
         <Route path="/sforms-home"          element={<SFormsHome/>} />
-        <Route path="/sform/:id"            element={<SFormView/>} />
+        <Route path="/sform/:formslug"      element={<SFormView/>} />
+        <Route path="/google-sign-in" element={<GoogleSignIn/>} />
+        <Route path="/forms/:form_slug" element={<FormPublicView/>} />
+        <Route path="/sforms-created" element={<SFormsDone/>} />
+{/* 
+        <Route path="/forms/:formSlug" element={<FormDetailsPage />} /> */}
       </Routes>
     </BrowserRouter>
   </>

@@ -2,18 +2,31 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function SFormView() {
-    const { id } = useParams();
+    const { formslug } = useParams();
     const [form, setForm] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const list = JSON.parse(sessionStorage.getItem("form_list")) || [];
 
-        const found = list.find(item => item.id.toString() === id);
+        const found = list.find(item => item.formslug == formslug);
 
         setForm(found);
+        
+        // Fetch responses from backend
+        fetch(`http://localhost:8000/forms/${formslug}/responses`)
+            .then(res => res.json())
+            .then(data => {
+                setResponses(data.responses || []);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Error fetching responses:", err);
+                setLoading(false);
+            });
+        
         setLoading(false);
-    }, [id]);
+    }, [formslug]);
 
     if (loading) {
         return (

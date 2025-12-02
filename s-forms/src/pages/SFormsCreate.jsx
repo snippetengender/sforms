@@ -4,6 +4,7 @@ import Header_Publish from "../components/Header_Publish";
 
 export default function CreateSForm() {
     const navigate = useNavigate();
+    const username = localStorage.getItem("user_name");
 
     const [formTitle, setFormTitle] = useState("");
     const [formQuestion, setFormQuestion] = useState("");
@@ -20,10 +21,19 @@ export default function CreateSForm() {
         }
     }, []);
 
-    const handleFormSubmit = () => {
+    const handleFormSubmit = async () => {
+        const formslug = await fetch("http://localhost:8000/forms/create-slug", 
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({form_title: formTitle})
+            }
+        );
         const newForm = {
-            id: Date.now(),
             form_title: formTitle,
+            form_slug: formslug,
             form_question: formQuestion,
             form_answer: formAnswer,
             created_at: new Date().toLocaleString(),
@@ -33,21 +43,52 @@ export default function CreateSForm() {
         if (newForm.before_signin === true) { delete newForm.before_signin; }
 
         let list = JSON.parse(sessionStorage.getItem("form_list")) || [];
+        // remove unwanted before_signin forms
         list = list.filter(f => f.before_signin !== true);
-        list.push(newForm);
 
-        const exists = list.some((f) => f.id === newForm.id);
+        // Check if form already exists (usually never true on first creation)
+        const exists = list.some(f => f.formslug === newForm.formslug);
+
         if (!exists) {
 
-        list.push(newForm);
-        sessionStorage.setItem("form_list", JSON.stringify(list));
-        sessionStorage.setItem("form_data", JSON.stringify(newForm));
-        navigate("/sforms-created");
+            list.push(newForm);
+
+            sessionStorage.setItem("form_list", JSON.stringify(list));
+            sessionStorage.setItem("form_data", JSON.stringify(newForm));
+
+            const payload = {
+                created_by: username,
+                form_name: formTitle,
+                questions: [
+                    {
+                        id: "q1",
+                        type: "text",
+                        label: formQuestion,
+                        required: true
+                    }
+                ],
+                status: "draft"
+                
+            };
+
+            const response = await fetch("http://localhost:8000/forms", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            const formslug = data.form_slug;
+
+            console.log("Form created with ID:", formslug);
+
+            navigate("/sforms-created", { state: { form_slug: formslug } });
         } else {
-            console.log("Form already submmited, so skipping")
-            navigate("/sforms-created")
-        };
-    };
+            console.log("Form already submitted, so skipping");
+            navigate("/sforms-created", { state: { form_slug: formslug } });
+        }};
 
     return (
         <section className="bg-black min-h-screen w-full overflow-x-hidden">
