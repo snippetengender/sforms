@@ -30,7 +30,7 @@ export default function App() {
 
         {/* poc for qr */}
         <Route path="/qrgenerator"          element={<Qrgenerator/>}/>
-        <Route path="/qrscanner"            element={<Qrscanner/>} />
+        {/* <Route path="/qrscanner"            element={<Qrscanner/>} /> */}
       </Routes>
     </BrowserRouter>
   </>
