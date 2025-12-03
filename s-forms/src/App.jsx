@@ -9,7 +9,7 @@ import SFormsDone   from "./pages/SFormsDone"
 import SFormsHome   from "./pages/SFormsHome"
 import SFormView    from "./pages/SFormView";
 import Qrgenerator  from "./pages/QRgen";
-// import Qrscanner    from "./pages/QRread"
+import Qrscanner    from "./pages/QRread"
 
 import './App.css'
 
@@ -30,7 +30,7 @@ export default function App() {
 
         {/* poc for qr */}
         <Route path="/qrgenerator"          element={<Qrgenerator/>}/>
-        {/* <Route path="/qrscanner"            element={<Qrscanner/>} /> */}
+        <Route path="/qrscanner"            element={<Qrscanner/>} />
       </Routes>
     </BrowserRouter>
   </>
