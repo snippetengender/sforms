@@ -10,7 +10,7 @@ export default function CreateSForms() {
     const [formAnswer, setFormAnswer] = useState("");
 
     useEffect(() => {
-        const storedDraft = sessionStorage.getItem("draft_form");
+        const storedDraft = localStorage.getItem("draft_form");
         if (storedDraft) {
             const draft = JSON.parse(storedDraft);
             setFormTitle(draft.form_title || "");
@@ -34,13 +34,13 @@ export default function CreateSForms() {
             created_at: new Date().toLocaleString(),
             before_signin: true,
         };
-        const existingForms = JSON.parse(sessionStorage.getItem("form_list")) || [];
+        const existingForms = JSON.parse(localStorage.getItem("form_list")) || [];
 
         existingForms.push(newForm);
 
-        sessionStorage.setItem("form_list", JSON.stringify(existingForms));
+        localStorage.setItem("form_list", JSON.stringify(existingForms));
 
-        sessionStorage.setItem(
+        localStorage.setItem(
             "draft_form",
             JSON.stringify({
                 form_title: formTitle,

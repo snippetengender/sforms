@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Header_Publish() {
+export default function Header_Publish({ onPublish }) {
 
   const [userPhotoURL, setUserPhotoURL] = useState(null);
   const navigate = useNavigate();

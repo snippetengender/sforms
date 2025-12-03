@@ -3,7 +3,12 @@ import { auth, googleProvider } from "../firebaseConfig"; // Assuming you have g
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 export default function GoogleSignIn() {
+    const navigate = useNavigate();
+
     const navigate = useNavigate();
 
     const logininWithGoogle = async () => {
@@ -48,8 +53,23 @@ export default function GoogleSignIn() {
         }
     }, []);
 
+            console.error("Error during Google Sign-In: ", error); // Log error
+            alert("An error occurred during Google Sign-In. Please try again.");
+        }
+    };
+
+    useEffect(() => {
+        const currentUser = auth.currentUser;
+        if (currentUser && currentUser.photoURL) {
+            localStorage.setItem("user_photoURL", currentUser.photoURL);
+        } else {
+            console.warn("User photoURL is not available");
+        }
+    }, []);
+
 
     return (
+        <div className="bg-black min-h-screen w-full overflow-x-hidden text-2xl text-white">
         <div className="bg-black min-h-screen w-full overflow-x-hidden text-2xl text-white">
             <h1>Google Authentication</h1>
             <button onClick={logininWithGoogle} className="bg-gray-800 rounded-2xl p-4 cursor-pointer">
