@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Header_PreviewPublish() {
+  
+  const navigate = useNavigate();
   return (
     <div className="text-white mt-2 p-4 flex justify-between items-center 
                     border-t-2 border-b-2 border-gray-800">
 
       <div 
         className="cursor-grab font-bold text-2xl text-left px-4 "
-        onClick={() => alert("Logo clicked!")}
+        onClick={() => navigate('/')}
       >
         <img src="src/assets/Snippet_logo.png" alt="Snippet" className="h-10 "/>
       </div>
