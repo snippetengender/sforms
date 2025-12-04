@@ -10,7 +10,7 @@ export default function CreateSForms() {
     const [formAnswer, setFormAnswer] = useState("");
 
     useEffect(() => {
-        const storedDraft = localStorage.getItem("draft_form");
+        const storedDraft = sessionStorage.getItem("draft_form");
         if (storedDraft) {
             const draft = JSON.parse(storedDraft);
             setFormTitle(draft.form_title || "");
@@ -20,27 +20,7 @@ export default function CreateSForms() {
     }, []);
 
     const handleFormSubmit = () => {
-
-        const formTitle = document.querySelector('textarea[name="form_title"]').value;
-        const formQuestion = document.querySelector('textarea[name="form_question"]').value;
-        const formAnswer = document.querySelector('input[name="form_answer"]').value;
-
-
-        const newForm = {
-            id: Date.now(),
-            form_title: formTitle,
-            form_question: formQuestion,
-            form_answer: formAnswer,
-            created_at: new Date().toLocaleString(),
-            before_signin: true,
-        };
-        const existingForms = JSON.parse(localStorage.getItem("form_list")) || [];
-
-        existingForms.push(newForm);
-
-        localStorage.setItem("form_list", JSON.stringify(existingForms));
-
-        localStorage.setItem(
+        sessionStorage.setItem(
             "draft_form",
             JSON.stringify({
                 form_title: formTitle,
@@ -53,50 +33,50 @@ export default function CreateSForms() {
     };
 
     return (
-        <>
-            <section className="bg-black min-h-screen w-full overflow-x-hidden">
-                <br />
-                <Header_PreviewPublish />
-                <button
-                    onClick={() => navigate("/create-event-page")}
-                    className="border-2 border-gray-800 text-1rem hover:bg-gray-900 text-gray-500 rounded-lg py-1 px-5 m-5"
-                >
-                    create an event page
-                </button>
-                <br />
-                <textarea
-                    type="text"
-                    name="form_title"
-                    placeholder="Form title"
-                    className="text-4xl text-white placeholder-gray-400 font-bold m-7 h-12 resize-none focus:outline-none overflow-y-auto scrollbar-none"
-                />
-                <br />
-                <textarea
-                    type="text"
-                    name="form_question"
-                    placeholder="Form question"
-                    className="text-2xl text-white placeholder-gray-400 font-bold m-7 h-24 resize-none focus:outline-none overflow-y-auto scrollbar-none"
-                />
-                <br />
-                <input
-                    type="text"
-                    name="form_answer"
-                    placeholder="Form answer"
-                    className="text-2xl text-white placeholder-gray-400 font-bold m-7 p-4 h-12 resize-none border-2 border-gray-700 rounded-2xl"
-                />
-                <button
-                    name="form-submit"
-                    className="bg-white hover:bg-gray-200 text-black text-1rem font-medium py-1 px-6 ml-7 block rounded-lg"
-                    onClick = {handleFormSubmit}
-                >
-                    Submit
-                </button>
-                <img
-                    src="src/assets/Snippy_peeking.png"
-                    alt="snippy_peeking"
-                    className="ml-4 mt-10 h-40 md:h-60 w-auto"
-                />
-            </section>
-        </>
+        <section className="bg-black min-h-screen w-full overflow-x-hidden">
+            <br />
+            <Header_PreviewPublish />
+            <button
+                onClick={() => navigate("/create-event-page")}
+                className="border-2 border-gray-800 text-1rem hover:bg-gray-900 text-gray-500 rounded-lg py-1 px-5 m-5"
+            >
+                create an event page
+            </button>
+            <br />
+            <textarea
+                type="text"
+                name="form_title"
+                placeholder="Form title"
+                value={formTitle}
+                onChange={(e) => setFormTitle(e.target.value)}
+                className="text-4xl text-white placeholder-gray-400 font-bold m-7 h-12 resize-none focus:outline-none"
+            />
+            <br />
+            <textarea
+                type="text"
+                name="form_question"
+                placeholder="Form question"
+                value={formQuestion}
+                onChange={(e) => setFormQuestion(e.target.value)}
+                className="text-2xl text-white placeholder-gray-400 font-bold m-7 h-24 resize-none focus:outline-none"
+            />
+            <br />
+            <input
+                type="text"
+                name="form_answer"
+                placeholder="Form answer"
+                value={formAnswer}
+                onChange={(e) => setFormAnswer(e.target.value)}
+                className="text-2xl text-white placeholder-gray-400 font-bold m-7 p-4 h-24 border-2 border-gray-700 rounded-2xl"
+            />
+
+            <button
+                name="form-submit"
+                className="bg-white hover:bg-gray-200 text-black text-1rem font-medium py-1 px-6 ml-7 block rounded-lg"
+                onClick={handleFormSubmit}
+            >
+                Publish
+            </button>
+        </section>
     );
 }

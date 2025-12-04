@@ -1,15 +1,13 @@
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../firebaseConfig"; // Assuming you have googleProvider exported from firebaseConfig
+import { auth, googleProvider } from "../firebaseConfig"; 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
 
 export default function GoogleSignIn() {
     const navigate = useNavigate();
 
-    const navigate = useNavigate();
 
     const logininWithGoogle = async () => {
         try {
@@ -39,19 +37,6 @@ export default function GoogleSignIn() {
 
             navigate("/sforms-create");
         } catch (error) {
-            console.error("Error during Google Sign-In: ", error); // Log error
-            alert("An error occurred during Google Sign-In. Please try again.");
-        }
-    };
-
-    useEffect(() => {
-        const currentUser = auth.currentUser;
-        if (currentUser && currentUser.photoURL) {
-            localStorage.setItem("user_photoURL", currentUser.photoURL);
-        } else {
-            console.warn("User photoURL is not available");
-        }
-    }, []);
 
             console.error("Error during Google Sign-In: ", error); // Log error
             alert("An error occurred during Google Sign-In. Please try again.");
@@ -75,6 +60,6 @@ export default function GoogleSignIn() {
             <button onClick={logininWithGoogle} className="bg-gray-800 rounded-2xl p-4 cursor-pointer">
                 Sign in with Google
             </button>
-        </div>
+        </div></div>
     );
 }

@@ -8,7 +8,7 @@ import CreateSForm  from "./pages/SFormsCreate"
 import SFormsDone   from "./pages/SFormsDone"
 import SFormsHome   from "./pages/SFormsHome"
 import SFormView    from "./pages/SFormView";
-import Qrgenerator  from "./pages/QRgen";
+// import Qrgenerator  from "./pages/QRgen";
 // import Qrscanner    from "./pages/QRread"
 import FormPublicView from "./pages/FormPublicView"
 
@@ -22,28 +22,17 @@ export default function App() {
       <Routes>
         <Route path="/"                     element={<Home/>} />
         <Route path="/snippet-forms"        element={<SForm/>} />
-        <Route path="/"                     element={<Home/>} />
-        <Route path="/snippet-forms"        element={<SForm/>} />
         <Route path="/create-snippet-forms" element={<CreateSForms/>} />
         <Route path="/google-sign-in"       element={<GoogleSignIn/>} />
         <Route path="/sforms-create"        element={<CreateSForm/>} />
         <Route path="/sforms-created"       element={<SFormsDone/>} />
         <Route path="/sforms-home"          element={<SFormsHome/>} />
         <Route path="/sform/:formslug"      element={<SFormView/>} />
-        <Route path="/google-sign-in" element={<GoogleSignIn/>} />
         <Route path="/forms/:form_slug" element={<FormPublicView/>} />
-        <Route path="/sforms-created" element={<SFormsDone/>} />
-{/* 
-        <Route path="/forms/:formSlug" element={<FormDetailsPage />} /> */}
-        <Route path="/google-sign-in"       element={<GoogleSignIn/>} />
-        <Route path="/sforms-create"        element={<CreateSForm/>} />
-        <Route path="/sforms-created"       element={<SFormsDone/>} />
-        <Route path="/sforms-home"          element={<SFormsHome/>} />
-        <Route path="/sform/:id"            element={<SFormView/>} />
-
-        {/* poc for qr */}
+{/*    <Route path="/forms/:formSlug" element={<FormDetailsPage />} /> */}
+        {/* poc for qr
         <Route path="/qrgenerator"          element={<Qrgenerator/>}/>
-        <Route path="/qrscanner"            element={<Qrscanner/>} />
+        <Route path="/qrscanner"            element={<Qrscanner/>} /> */}
       </Routes>
     </BrowserRouter>
   </>
