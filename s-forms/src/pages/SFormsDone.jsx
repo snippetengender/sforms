@@ -10,7 +10,7 @@ export default function SFormsDone(){
     const formSlug = location.state?.form_slug;
 
     // The link:
-    const formLink = `http://localhost:5173/forms/${formSlug}`;
+    const formLink = `http://api-sforms.onrender.com/forms/${formSlug}`;
     
     const navigate = useNavigate();
     return(
