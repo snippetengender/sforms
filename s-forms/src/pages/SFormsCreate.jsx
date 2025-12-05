@@ -21,7 +21,7 @@ export default function CreateSForm() {
     }, []);
 
     const handleFormSubmit = async () => {
-        const slugResponse = await fetch("http://api-sforms.onrender.com/forms/create-slug", {
+        const slugResponse = await fetch("https://api-sforms.onrender.com/forms/create-slug", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ form_title: formTitle })
@@ -45,7 +45,7 @@ export default function CreateSForm() {
             status: "draft"
         };
 
-        await fetch("http://api-sforms.onrender.com/forms", {
+        await fetch("https://api-sforms.onrender.com/forms", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)

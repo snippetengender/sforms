@@ -18,7 +18,7 @@ export default function GoogleSignIn() {
 
             const idToken = await user.getIdToken();
 
-            await fetch("http://api-sforms.onrender.com/forms/auth/login", {
+            await fetch("https://api-sforms.onrender.com/forms/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

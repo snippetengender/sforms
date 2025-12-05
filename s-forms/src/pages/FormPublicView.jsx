@@ -9,7 +9,7 @@ export default function FormPublicView() {
     useEffect(() => {
         async function fetchForm() {
             try {
-                const res = await fetch(`http://api-sforms.onrender.com/forms/${form_slug}`);
+                const res = await fetch(`https://api-sforms.onrender.com/forms/${form_slug}`);
                 const data = await res.json();
                 setForm(data);
             } catch (err) {
@@ -26,7 +26,7 @@ export default function FormPublicView() {
             response: answer,
         };
 
-        await fetch(`http://api-sforms.onrender.com/forms/submit-response`, {
+        await fetch(`https://api-sforms.onrender.com/forms/submit-response`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
