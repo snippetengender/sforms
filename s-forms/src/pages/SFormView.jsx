@@ -8,7 +8,7 @@ export default function SFormView() {
     const [loading, setLoading] = useState(true);
     const [responses, setResponses] = useState([]);
 
-    const formLink = `https://api-sforms.onrender.com/forms/${formslug}`;
+    const formLink = `https://sforms.onrender.com/forms/${formslug}`;
 
 useEffect(() => {
     const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];
