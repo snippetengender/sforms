@@ -5,6 +5,7 @@ import Header_Publish from "../components/Header_Publish";
 export default function CreateSForm() {
     const navigate = useNavigate();
     const username = localStorage.getItem("user_name");
+    const useremail = localStorage.getItem("user_email");
     const apiurl = import.meta.env.VITE_API_URL;
 
     const [formTitle, setFormTitle] = useState("");
@@ -32,7 +33,8 @@ export default function CreateSForm() {
         const finalFormSlug = slugData.form_slug || slugData.slug;
 
         const payload = {
-            created_by: username,
+            creator: username,
+            creator_email: useremail,
             form_slug: finalFormSlug,
             form_name: formTitle,
             questions: [

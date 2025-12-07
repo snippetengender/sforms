@@ -29,6 +29,9 @@ export default function GoogleSignIn() {
             if (user.displayName) {
                 localStorage.setItem("user_name", user.displayName);
             }
+            if (user.email) {
+                localStorage.setItem("user_email", user.email);
+            }
             // Store the user's photoURL in localStorage
             if (user.photoURL) {
                 localStorage.setItem("user_photoURL", user.photoURL);
