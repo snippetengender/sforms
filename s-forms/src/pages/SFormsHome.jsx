@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function SFormsHome() {
     const [forms, setForms] = useState([]);
     const navigate = useNavigate();
-    const appurl = process.env.VITE_URL;
+    const appurl = import.meta.env.VITE_URL;
 
     const loadForms = () => {
         const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];

@@ -7,8 +7,8 @@ export default function SFormView() {
     const [form, setForm] = useState(null);
     const [loading, setLoading] = useState(true);
     const [responses, setResponses] = useState([]);
-    const appurl = process.env.VITE_URL;
-    const apiurl = process.env.VITE_API_URL;
+    const appurl = import.meta.env.VITE_URL;
+    const apiurl = import.meta.env.VITE_API_URL;
 
     const formLink = `${appurl}/forms/${formslug}`;
 

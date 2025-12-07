@@ -5,7 +5,7 @@ import Header_Publish from "../components/Header_Publish";
 export default function CreateSForm() {
     const navigate = useNavigate();
     const username = localStorage.getItem("user_name");
-    const apiurl = process.env.VITE_API_URL;
+    const apiurl = import.meta.env.VITE_API_URL;
 
     const [formTitle, setFormTitle] = useState("");
     const [formQuestion, setFormQuestion] = useState("");

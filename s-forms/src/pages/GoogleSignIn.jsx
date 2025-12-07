@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function GoogleSignIn() {
     const navigate = useNavigate();
-    const apiurl = process.env.VITE_API_URL;
+    const apiurl = import.meta.env.VITE_API_URL;
 
 
     const logininWithGoogle = async () => {

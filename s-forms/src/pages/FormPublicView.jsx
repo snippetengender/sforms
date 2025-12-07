@@ -5,7 +5,7 @@ export default function FormPublicView() {
     const { form_slug } = useParams();
     const [form, setForm] = useState(null);
     const [answer, setAnswer] = useState("");
-    const apiurl = process.env.VITE_API_URL;
+    const apiurl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         async function fetchForm() {

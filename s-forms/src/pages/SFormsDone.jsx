@@ -8,7 +8,7 @@ export default function SFormsDone(){
 
     const location = useLocation();
     const formSlug = location.state?.form_slug;
-    const appurl = process.env.VITE_URL;
+    const appurl = import.meta.env.VITE_URL;
 
     // The link:
     const formLink = `${appurl}/forms/${formSlug}`;
