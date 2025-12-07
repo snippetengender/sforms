@@ -5,11 +5,12 @@ export default function FormPublicView() {
     const { form_slug } = useParams();
     const [form, setForm] = useState(null);
     const [answer, setAnswer] = useState("");
+    const apiurl = process.env.VITE_API_URL;
 
     useEffect(() => {
         async function fetchForm() {
             try {
-                const res = await fetch(`https://api-sforms.onrender.com/forms/${form_slug}`);
+                const res = await fetch(`${apiurl}/forms/${form_slug}`);
                 const data = await res.json();
                 setForm(data);
             } catch (err) {
@@ -26,7 +27,7 @@ export default function FormPublicView() {
             response: answer,
         };
 
-        await fetch(`https://api-sforms.onrender.com/forms/submit-response`, {
+        await fetch(`${apiurl}/forms/submit-response`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

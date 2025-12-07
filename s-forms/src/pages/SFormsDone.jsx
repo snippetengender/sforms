@@ -8,9 +8,10 @@ export default function SFormsDone(){
 
     const location = useLocation();
     const formSlug = location.state?.form_slug;
+    const appurl = process.env.VITE_URL;
 
     // The link:
-    const formLink = `https://sforms.onrender.com/forms/${formSlug}`;
+    const formLink = `${appurl}/forms/${formSlug}`;
     
     const navigate = useNavigate();
     return(

@@ -7,8 +7,10 @@ export default function SFormView() {
     const [form, setForm] = useState(null);
     const [loading, setLoading] = useState(true);
     const [responses, setResponses] = useState([]);
+    const appurl = process.env.VITE_URL;
+    const apiurl = process.env.VITE_API_URL;
 
-    const formLink = `https://sforms.onrender.com/forms/${formslug}`;
+    const formLink = `${appurl}/forms/${formslug}`;
 
 useEffect(() => {
     const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];
@@ -16,7 +18,7 @@ useEffect(() => {
 
     setForm(found);
 
-    fetch(`https://api-sforms.onrender.com/forms/${formslug}/responses`)
+    fetch(`${apiurl}/forms/${formslug}/responses`)
         .then(res => res.json())
         .then(data => {
             setResponses(data.responses || []);

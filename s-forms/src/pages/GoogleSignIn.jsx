@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 export default function GoogleSignIn() {
     const navigate = useNavigate();
+    const apiurl = process.env.VITE_API_URL;
 
 
     const logininWithGoogle = async () => {
@@ -18,7 +19,7 @@ export default function GoogleSignIn() {
 
             const idToken = await user.getIdToken();
 
-            await fetch("https://api-sforms.onrender.com/forms/auth/login", {
+            await fetch(`${apiurl}/forms/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

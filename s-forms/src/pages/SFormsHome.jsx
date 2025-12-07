@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function SFormsHome() {
     const [forms, setForms] = useState([]);
     const navigate = useNavigate();
+    const appurl = process.env.VITE_URL;
 
     const loadForms = () => {
         const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];
@@ -59,7 +60,7 @@ export default function SFormsHome() {
 
                             <div className="flex items-center space-x-3">
                                 <button onClick={() => navigate(`/sform/${form.form_slug}`)} className="bg-white mr-2 text-2xl pb-1 px-5 font-medium text-black rounded-2xl">open</button>
-                                <button onClick={() => { navigator.clipboard.writeText(`https://sforms.onrender.com/forms/${form.form_slug}`); alert("Link copied to clipboard!"); }} className="bg-gray-700 p-3 rounded-full text-sm">
+                                <button onClick={() => { navigator.clipboard.writeText(`${appurl}/forms/${form.form_slug}`); alert("Link copied to clipboard!"); }} className="bg-gray-700 p-3 rounded-full text-sm">
                                 link
                                 </button>
                             </div>

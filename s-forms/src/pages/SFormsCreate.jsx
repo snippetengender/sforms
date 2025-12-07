@@ -5,6 +5,7 @@ import Header_Publish from "../components/Header_Publish";
 export default function CreateSForm() {
     const navigate = useNavigate();
     const username = localStorage.getItem("user_name");
+    const apiurl = process.env.VITE_API_URL;
 
     const [formTitle, setFormTitle] = useState("");
     const [formQuestion, setFormQuestion] = useState("");
@@ -21,7 +22,7 @@ export default function CreateSForm() {
     }, []);
 
     const handleFormSubmit = async () => {
-        const slugResponse = await fetch("https://api-sforms.onrender.com/forms/create-slug", {
+        const slugResponse = await fetch(`${apiurl}/forms/create-slug`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ form_title: formTitle })
@@ -45,7 +46,7 @@ export default function CreateSForm() {
             status: "draft"
         };
 
-        await fetch("https://api-sforms.onrender.com/forms", {
+        await fetch(`${apiurl}/forms`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
