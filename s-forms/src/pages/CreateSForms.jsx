@@ -29,7 +29,7 @@ export default function CreateSForms() {
             })
         );
 
-        navigate("/google-sign-in");
+        navigate("/google-sign-in", {state : { from: "/sforms-create" }});
     };
 
     return (

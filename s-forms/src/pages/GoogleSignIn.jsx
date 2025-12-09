@@ -1,69 +1,47 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../firebaseConfig"; 
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { auth } from "../firebaseConfig";
+import GoogleSignInButton from "../components/GoogleSignInButton";
 
 export default function GoogleSignIn() {
-    const navigate = useNavigate();
-    const apiurl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const redirectPath = location.state?.from || "/sforms-home";
 
-    const logininWithGoogle = async () => {
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
-            console.log('User UID:', user.uid);
-            console.log('Full User Object:', user); 
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser && currentUser.photoURL) {
+      localStorage.setItem("user_photoURL", currentUser.photoURL);
+    }
+  }, []);
 
-            const idToken = await user.getIdToken();
+  return (
+    <div className="bg-black min-h-screen w-full overflow-x-hidden text-white flex items-center justify-center">
+      <div className="w-full max-w-md mx-auto px-6">
 
-            await fetch(`${apiurl}/forms/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id_token: idToken }),
-            });
-            if (user.displayName) {
-                localStorage.setItem("user_name", user.displayName);
-            }
-            if (user.email) {
-                localStorage.setItem("user_email", user.email);
-            }
-            // Store the user's photoURL in localStorage
-            if (user.photoURL) {
-                localStorage.setItem("user_photoURL", user.photoURL);
-            } else {
-                console.warn("User photoURL is not available");
-            }
+        <div className="text-center mb-12">
+          <img 
+            src="/src/assets/Snippet_logo.png" 
+            alt="Snippet Logo" 
+            className="h-16 mx-auto mb-4"
+          />
+          <p className="text-gray-400 text-lg">
+            Create and share forms
+          </p>
+        </div>
 
-            navigate("/sforms-create");
-        } catch (error) {
+        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-2xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold mb-2">Welcome</h2>
+            <p className="text-gray-400 text-sm">
+              Sign in with your Google account to get started
+            </p>
+          </div>
 
-            console.error("Error during Google Sign-In: ", error); // Log error
-            alert("An error occurred during Google Sign-In. Please try again.");
-        }
-    };
-
-    useEffect(() => {
-        const currentUser = auth.currentUser;
-        if (currentUser && currentUser.photoURL) {
-            localStorage.setItem("user_photoURL", currentUser.photoURL);
-        } else {
-            console.warn("User photoURL is not available");
-        }
-    }, []);
-
-
-    return (
-        <div className="bg-black min-h-screen w-full overflow-x-hidden text-2xl text-white">
-        <div className="bg-black min-h-screen w-full overflow-x-hidden text-2xl text-white">
-            <h1>Google Authentication</h1>
-            <button onClick={logininWithGoogle} className="bg-gray-800 rounded-2xl p-4 cursor-pointer">
-                Sign in with Google
-            </button>
-        </div></div>
-    );
+          <GoogleSignInButton onSuccess={() => navigate(redirectPath)} />
+        </div>
+      </div>
+    </div>
+  );
 }
