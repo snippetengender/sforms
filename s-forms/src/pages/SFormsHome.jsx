@@ -6,10 +6,22 @@ export default function SFormsHome() {
     const [forms, setForms] = useState([]);
     const navigate = useNavigate();
     const appurl = import.meta.env.VITE_URL;
+    const apiurl = import.meta.env.VITE_API_URL;
 
-    const loadForms = () => {
-        const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];
-        setForms(savedForms);
+    const loadForms = async () => {
+        const userEmail = localStorage.getItem("user_email");
+        if (!userEmail) return setForms([]);
+        try {
+            const response = await fetch(`${apiurl}/forms/user-forms`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({email: userEmail})
+        });
+            const data = await response.json();
+            setForms(data.forms || []);
+        } catch (error) {
+            setForms([]);
+        }
     };
 
     useEffect(() => {

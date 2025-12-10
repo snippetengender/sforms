@@ -54,19 +54,6 @@ export default function CreateSForm() {
             body: JSON.stringify(payload)
         });
 
-        const newForm = {
-            form_title: formTitle,
-            form_slug: finalFormSlug,
-            form_question: formQuestion,
-            form_answer: formAnswer,
-            created_at: new Date().toLocaleString(),
-        };
-
-        const list = JSON.parse(localStorage.getItem("form_list")) || [];
-        list.push(newForm);
-        localStorage.setItem("form_list", JSON.stringify(list));
-
-        // remove the draft after publishing
         sessionStorage.removeItem("draft_form");
 
         navigate("/sforms-created", { state: { form_slug: finalFormSlug } });

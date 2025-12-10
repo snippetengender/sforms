@@ -9,23 +9,30 @@ export default function SFormView() {
     const [responses, setResponses] = useState([]);
     const appurl = import.meta.env.VITE_URL;
     const apiurl = import.meta.env.VITE_API_URL;
-
     const formLink = `${appurl}/forms/${formslug}`;
 
-useEffect(() => {
-    const savedForms = JSON.parse(localStorage.getItem("form_list")) || [];
-    const found = savedForms.find(item => item.form_slug === formslug);
+    useEffect(() => {
+        async function fetchForm() {
+            try {
+                const res = await fetch(`${apiurl}/forms/${formslug}`);
+                const data = await res.json();
+                setForm(data);
+            } catch (err) {
+                console.error("Error fetching form:", err);
+            }
+        }fetchForm();
+    }, [formslug, apiurl]);
 
-    setForm(found);
 
-    fetch(`${apiurl}/forms/${formslug}/responses`)
-        .then(res => res.json())
-        .then(data => {
-            setResponses(data.responses || []);
-        })
-        .catch(err => console.error(err))
-        .finally(() => setLoading(false));
-}, [formslug]);
+    useEffect(() => {
+        fetch(`${apiurl}/forms/${formslug}/responses`)
+            .then(res => res.json())
+            .then(data => {
+                setResponses(data.responses || []);
+            })
+            .catch(err => console.error(err))
+            .finally(() => setLoading(false));
+    }, [formslug, apiurl]);
 
     if (loading) {
         return (
@@ -54,7 +61,7 @@ useEffect(() => {
         ← Back to Home
       </button>
       
-      <h1 className="text-4xl font-bold mb-2">{form.form_title}</h1>
+      <h1 className="text-4xl font-bold mb-2">{form.form_name}</h1>
 
       <p className="text-gray-500 mb-8 text-sm">
         Created: {form.created_at}
